@@ -26,14 +26,12 @@ class TopPopViewModel(
     private var topChartDataResponse: TopChartResponse? = null
 
     fun getTopChart() = viewModelScope.launch {
-
         safeTopChartNetworkCall()
     }
 
     private suspend fun safeTopChartNetworkCall() {
 
         topChartData.postValue(Resource.Loading())
-
         try {
             if (hasInternetConnection()) {
                 val response = topPopRepository.getTopChart()
