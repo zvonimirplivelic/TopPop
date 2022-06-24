@@ -1,8 +1,11 @@
 package com.zvonimirplivelic.toppop.model
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class TopChartResponse(
     @SerializedName("albums")
     val albums: Albums,
@@ -14,13 +17,15 @@ data class TopChartResponse(
     val podcasts: Podcasts,
     @SerializedName("tracks")
     val tracks: Tracks
-) {
+) : Parcelable {
+    @Parcelize
     data class Albums(
         @SerializedName("data")
         val `data`: List<Data>,
         @SerializedName("total")
         val total: Int
-    ) {
+    ) : Parcelable {
+        @Parcelize
         data class Data(
             @SerializedName("artist")
             val artist: Artist,
@@ -52,7 +57,8 @@ data class TopChartResponse(
             val tracklist: String,
             @SerializedName("type")
             val type: String
-        ) {
+        ) : Parcelable {
+            @Parcelize
             data class Artist(
                 @SerializedName("id")
                 val id: Int,
@@ -76,16 +82,18 @@ data class TopChartResponse(
                 val tracklist: String,
                 @SerializedName("type")
                 val type: String
-            )
+            ) : Parcelable
         }
     }
 
+    @Parcelize
     data class Artists(
         @SerializedName("data")
         val `data`: List<Data>,
         @SerializedName("total")
         val total: Int
-    ) {
+    ) : Parcelable {
+        @Parcelize
         data class Data(
             @SerializedName("id")
             val id: Int,
@@ -111,15 +119,17 @@ data class TopChartResponse(
             val tracklist: String,
             @SerializedName("type")
             val type: String
-        )
+        ) : Parcelable
     }
 
+    @Parcelize
     data class Playlists(
         @SerializedName("data")
         val `data`: List<Data>,
         @SerializedName("total")
         val total: Int
-    ) {
+    ) : Parcelable {
+        @Parcelize
         data class Data(
             @SerializedName("checksum")
             val checksum: String,
@@ -155,7 +165,8 @@ data class TopChartResponse(
             val type: String,
             @SerializedName("user")
             val user: User
-        ) {
+        ) : Parcelable {
+            @Parcelize
             data class User(
                 @SerializedName("id")
                 val id: Long,
@@ -165,16 +176,18 @@ data class TopChartResponse(
                 val tracklist: String,
                 @SerializedName("type")
                 val type: String
-            )
+            ) : Parcelable
         }
     }
 
+    @Parcelize
     data class Podcasts(
         @SerializedName("data")
         val `data`: List<Data>,
         @SerializedName("total")
         val total: Int
-    ) {
+    ) : Parcelable {
+        @Parcelize
         data class Data(
             @SerializedName("available")
             val available: Boolean,
@@ -202,15 +215,18 @@ data class TopChartResponse(
             val title: String,
             @SerializedName("type")
             val type: String
-        )
+        ) : Parcelable
     }
 
+    @Parcelize
     data class Tracks(
         @SerializedName("data")
         val `data`: List<Data>,
         @SerializedName("total")
         val total: Int
-    ) {
+    ) : Parcelable {
+
+        @Parcelize
         data class Data(
             @SerializedName("album")
             val album: Album,
@@ -244,7 +260,9 @@ data class TopChartResponse(
             val titleVersion: String,
             @SerializedName("type")
             val type: String
-        ) {
+        ) : Parcelable {
+
+            @Parcelize
             data class Album(
                 @SerializedName("cover")
                 val cover: String,
@@ -266,8 +284,9 @@ data class TopChartResponse(
                 val tracklist: String,
                 @SerializedName("type")
                 val type: String
-            )
+            ) : Parcelable
 
+            @Parcelize
             data class Artist(
                 @SerializedName("id")
                 val id: Int,
@@ -291,7 +310,7 @@ data class TopChartResponse(
                 val tracklist: String,
                 @SerializedName("type")
                 val type: String
-            )
+            ) : Parcelable
         }
     }
 }
