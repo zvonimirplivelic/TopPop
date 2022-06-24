@@ -1,9 +1,11 @@
 package com.zvonimirplivelic.toppop.model
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
-
+@Parcelize
 data class AlbumDetailResponse(
     @SerializedName("artist")
     val artist: Artist,
@@ -61,7 +63,9 @@ data class AlbumDetailResponse(
     val type: String,
     @SerializedName("upc")
     val upc: String
-) {
+) : Parcelable {
+
+    @Parcelize
     data class Artist(
         @SerializedName("id")
         val id: Int,
@@ -81,8 +85,9 @@ data class AlbumDetailResponse(
         val tracklist: String,
         @SerializedName("type")
         val type: String
-    )
+    ) : Parcelable
 
+    @Parcelize
     data class Contributor(
         @SerializedName("id")
         val id: Int,
@@ -110,12 +115,14 @@ data class AlbumDetailResponse(
         val tracklist: String,
         @SerializedName("type")
         val type: String
-    )
+    ) : Parcelable
 
+    @Parcelize
     data class Genres(
         @SerializedName("data")
         val `data`: List<Data>
-    ) {
+    ) : Parcelable {
+        @Parcelize
         data class Data(
             @SerializedName("id")
             val id: Int,
@@ -125,13 +132,15 @@ data class AlbumDetailResponse(
             val picture: String,
             @SerializedName("type")
             val type: String
-        )
+        ) : Parcelable
     }
 
+    @Parcelize
     data class Tracks(
         @SerializedName("data")
         val `data`: List<Data>
-    ) {
+    ) : Parcelable {
+        @Parcelize
         data class Data(
             @SerializedName("album")
             val album: Album,
@@ -165,7 +174,8 @@ data class AlbumDetailResponse(
             val titleVersion: String,
             @SerializedName("type")
             val type: String
-        ) {
+        ) : Parcelable {
+            @Parcelize
             data class Album(
                 @SerializedName("id")
                 val id: Int,
@@ -177,8 +187,9 @@ data class AlbumDetailResponse(
                 val tracklist: String,
                 @SerializedName("type")
                 val type: String
-            )
+            ) : Parcelable
 
+            @Parcelize
             data class Artist(
                 @SerializedName("id")
                 val id: Int,
@@ -188,7 +199,7 @@ data class AlbumDetailResponse(
                 val tracklist: String,
                 @SerializedName("type")
                 val type: String
-            )
+            ) : Parcelable
         }
     }
 }

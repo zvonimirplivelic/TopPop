@@ -6,6 +6,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/fragment_top_chart.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/fragment_track_details.xml" value="0.19375" />
+        <entry key="app/src/main/res/layout/top_chart_item.xml" value="0.22" />
       </map>
     </option>
   </component>
