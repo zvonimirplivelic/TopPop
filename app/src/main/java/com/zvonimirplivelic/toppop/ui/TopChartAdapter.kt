@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -56,6 +57,14 @@ class TopChartAdapter : RecyclerView.Adapter<TopChartAdapter.TopChartItemViewHol
             tvTrackTitle.text = chartItem.title
             tvArtistName.text = chartItem.artist.name
             tvTrackDuration.text = chartItem.duration.toString()
+
+            setOnClickListener {
+                val action =
+                    TopChartFragmentDirections.actionTopChartFragmentToTrackDetailsFragment(
+                        chartItem
+                    )
+                findNavController().navigate(action)
+            }
         }
     }
 
