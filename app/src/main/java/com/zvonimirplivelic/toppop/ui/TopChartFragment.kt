@@ -1,23 +1,24 @@
 package com.zvonimirplivelic.toppop.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.zvonimirplivelic.toppop.R
+import com.zvonimirplivelic.toppop.model.TopChartResponse
 import com.zvonimirplivelic.toppop.util.Resource
 import com.zvonimirplivelic.toppop.util.TopPopViewModel
 
 class TopChartFragment : Fragment() {
 
     private lateinit var viewModel: TopPopViewModel
+    private lateinit var rvTopChart: RecyclerView
+    private lateinit var topChartAdapter: TopChartAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,11 +26,12 @@ class TopChartFragment : Fragment() {
     ): View? {
 
         val view = inflater.inflate(R.layout.fragment_top_chart, container, false)
+        setHasOptionsMenu(true)
 
         val progressBar: ProgressBar = view.findViewById(R.id.progress_bar)
 
-        val rvTopChart: RecyclerView = view.findViewById(R.id.rv_top_chart)
-        val topChartAdapter = TopChartAdapter()
+        topChartAdapter = TopChartAdapter()
+        rvTopChart = view.findViewById(R.id.rv_top_chart)
 
         viewModel = ViewModelProvider(this)[TopPopViewModel::class.java]
 
@@ -69,5 +71,32 @@ class TopChartFragment : Fragment() {
         }
 
         return view
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
+        inflater.inflate(R.menu.sort_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val topChart = topChartAdapter.differ.currentList
+
+        when (item.itemId) {
+            R.id.sort_normal -> {
+                topChartAdapter.differ.submitList(topChart.sortedBy { it.position })
+                return true
+            }
+            R.id.sort_ascending -> {
+                topChartAdapter.differ.submitList(topChart.sortedBy { it.duration })
+                return true
+            }
+            R.id.sort_descending -> {
+                topChartAdapter.differ.submitList(topChart.sortedByDescending { it.duration })
+                return true
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 }
