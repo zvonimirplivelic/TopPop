@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/topChartFragment"
         android:name="com.zvonimirplivelic.toppop.ui.TopChartFragment"
-        android:label="fragment_top_chart"
+        android:label="Top chart"
         tools:layout="@layout/fragment_top_chart" >
         <action
             android:id="@+id/action_topChartFragment_to_trackDetailsFragment"
@@ -17,6 +17,10 @@
     <fragment
         android:id="@+id/trackDetailsFragment"
         android:name="com.zvonimirplivelic.toppop.ui.TrackDetailsFragment"
-        android:label="fragment_track_details"
-        tools:layout="@layout/fragment_track_details" />
+        android:label="Track details"
+        tools:layout="@layout/fragment_track_details" >
+        <argument
+            android:name="selectedTrack"
+            app:argType="com.zvonimirplivelic.toppop.model.TopChartResponse$Tracks$Data" />
+    </fragment>
 </navigation>
