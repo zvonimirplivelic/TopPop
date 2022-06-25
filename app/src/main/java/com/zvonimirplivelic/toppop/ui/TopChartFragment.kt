@@ -19,6 +19,7 @@ class TopChartFragment : Fragment() {
     private lateinit var viewModel: TopPopViewModel
     private lateinit var rvTopChart: RecyclerView
     private lateinit var topChartAdapter: TopChartAdapter
+    private lateinit var linearLayoutManager: LinearLayoutManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,6 +31,7 @@ class TopChartFragment : Fragment() {
 
         val progressBar: ProgressBar = view.findViewById(R.id.progress_bar)
 
+        linearLayoutManager = LinearLayoutManager(activity)
         topChartAdapter = TopChartAdapter()
         rvTopChart = view.findViewById(R.id.rv_top_chart)
 
@@ -37,7 +39,7 @@ class TopChartFragment : Fragment() {
 
         rvTopChart.apply {
             adapter = topChartAdapter
-            layoutManager = LinearLayoutManager(activity)
+            layoutManager = linearLayoutManager
         }
 
         viewModel.getTopChart()
@@ -80,6 +82,7 @@ class TopChartFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
         val topChart = topChartAdapter.differ.currentList
 
         when (item.itemId) {

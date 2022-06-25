@@ -56,7 +56,7 @@ class TopChartAdapter : RecyclerView.Adapter<TopChartAdapter.TopChartItemViewHol
             tvTrackPosition.text = chartItem.position.toString()
             tvTrackTitle.text = chartItem.title
             tvArtistName.text = chartItem.artist.name
-            tvTrackDuration.text = chartItem.duration.toString()
+            tvTrackDuration.text = convertTime(chartItem.duration)
 
             setOnClickListener {
                 val action =
@@ -70,4 +70,14 @@ class TopChartAdapter : RecyclerView.Adapter<TopChartAdapter.TopChartItemViewHol
 
     override fun getItemCount() = differ.currentList.size
 
+    private fun convertTime(duration: Int): String {
+        val minutes = duration / 60
+        var seconds = (duration % 60).toString()
+
+        if(seconds.toInt() < 10) {
+            seconds = "0$seconds"
+        }
+
+        return "$minutes:$seconds"
+    }
 }
