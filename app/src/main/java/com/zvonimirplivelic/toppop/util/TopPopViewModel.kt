@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.zvonimirplivelic.toppop.TopPopApplication
 import com.zvonimirplivelic.toppop.TopPopRepository
+import com.zvonimirplivelic.toppop.model.AlbumDetailResponse
 import com.zvonimirplivelic.toppop.model.TopChartResponse
 import com.zvonimirplivelic.toppop.util.Constants.TIME_DELAY
 import kotlinx.coroutines.delay
@@ -25,8 +26,15 @@ class TopPopViewModel(
     val topChartData: MutableLiveData<Resource<TopChartResponse>> = MutableLiveData()
     private var topChartDataResponse: TopChartResponse? = null
 
+    val albumTracksData: MutableLiveData<Resource<AlbumDetailResponse>> = MutableLiveData()
+    private var albumTracksDataResponse: AlbumDetailResponse? = null
+
     fun getTopChart() = viewModelScope.launch {
         safeTopChartNetworkCall()
+    }
+
+    fun getAlbumTrackList(albumId: Int) = viewModelScope.launch {
+        safeAlbumTrackListNetworkCall(albumId)
     }
 
     private suspend fun safeTopChartNetworkCall() {
@@ -49,6 +57,26 @@ class TopPopViewModel(
         }
     }
 
+    private suspend fun safeAlbumTrackListNetworkCall(albumId: Int) {
+
+        albumTracksData.postValue(Resource.Loading())
+        try {
+            if (hasInternetConnection()) {
+                val response = topPopRepository.getAlbumDetails(albumId)
+                delay(TIME_DELAY)
+                albumTracksData.postValue(handleAlbumTrackListResponse(response))
+            } else {
+                albumTracksData.postValue(Resource.Error("No internet connection"))
+            }
+        } catch (t: Throwable) {
+            when (t) {
+                is IOException -> topChartData.postValue(Resource.Error("Network Failure"))
+                else -> topChartData.postValue(Resource.Error("Conversion Error: $t"))
+            }
+            Timber.d("Throwable: $t")
+        }
+    }
+
     private fun handleTopChartResponse(response: Response<TopChartResponse>): Resource<TopChartResponse> {
         if (response.isSuccessful) {
             response.body()?.let { resultResponse ->
@@ -56,6 +84,17 @@ class TopPopViewModel(
                 topChartDataResponse = resultResponse
 
                 return Resource.Success(topChartDataResponse ?: resultResponse)
+            }
+        }
+        return Resource.Error(response.message())
+    }
+
+    private fun handleAlbumTrackListResponse(response: Response<AlbumDetailResponse>): Resource<AlbumDetailResponse> {
+        if (response.isSuccessful) {
+            response.body()?.let { resultResponse ->
+                albumTracksDataResponse = resultResponse
+
+                return Resource.Success(albumTracksDataResponse ?: resultResponse)
             }
         }
         return Resource.Error(response.message())
