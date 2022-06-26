@@ -9,30 +9,19 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.zvonimirplivelic.toppop.R
+import com.zvonimirplivelic.toppop.model.AlbumDetailResponse
 import com.zvonimirplivelic.toppop.model.TopChartResponse
+import com.zvonimirplivelic.toppop.util.DiffUtilExtension.autoNotify
+import kotlin.properties.Delegates
 
 class TopChartAdapter : RecyclerView.Adapter<TopChartAdapter.TopChartItemViewHolder>() {
 
+    private var topChart: List<TopChartResponse.Tracks.Data>
+            by Delegates.observable(emptyList()) { _, oldList, newList ->
+                autoNotify(oldList, newList) { o, n -> o.id == n.id }
+            }
+
     inner class TopChartItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
-
-    private val diffCallback =
-        object : DiffUtil.ItemCallback<TopChartResponse.Tracks.Data>() {
-            override fun areItemsTheSame(
-                oldItem: TopChartResponse.Tracks.Data,
-                newItem: TopChartResponse.Tracks.Data
-            ): Boolean {
-                return oldItem.id == newItem.id
-            }
-
-            override fun areContentsTheSame(
-                oldItem: TopChartResponse.Tracks.Data,
-                newItem: TopChartResponse.Tracks.Data
-            ): Boolean {
-                return oldItem == newItem
-            }
-        }
-
-    val differ = AsyncListDiffer(this, diffCallback)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopChartItemViewHolder {
         return TopChartItemViewHolder(
@@ -45,7 +34,7 @@ class TopChartAdapter : RecyclerView.Adapter<TopChartAdapter.TopChartItemViewHol
     }
 
     override fun onBindViewHolder(holder: TopChartItemViewHolder, position: Int) {
-        val chartItem = differ.currentList[position]
+        val chartItem = topChart[position]
 
         holder.itemView.apply {
             val tvTrackPosition: TextView = findViewById(R.id.tv_track_position)
@@ -68,7 +57,7 @@ class TopChartAdapter : RecyclerView.Adapter<TopChartAdapter.TopChartItemViewHol
         }
     }
 
-    override fun getItemCount() = differ.currentList.size
+    override fun getItemCount() = topChart.size
 
     private fun convertTime(duration: Int): String {
         val minutes = duration / 60
@@ -79,5 +68,9 @@ class TopChartAdapter : RecyclerView.Adapter<TopChartAdapter.TopChartItemViewHol
         }
 
         return "$minutes:$seconds"
+    }
+
+    fun setData(topChart: List<TopChartResponse.Tracks.Data>) {
+        this.topChart = topChart
     }
 }

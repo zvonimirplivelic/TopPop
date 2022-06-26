@@ -1,4 +1,4 @@
-package com.zvonimirplivelic.toppop.util
+package com.zvonimirplivelic.toppop
 
 import android.app.Application
 import android.content.Context
@@ -7,11 +7,10 @@ import android.net.NetworkCapabilities
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.zvonimirplivelic.toppop.TopPopApplication
-import com.zvonimirplivelic.toppop.TopPopRepository
 import com.zvonimirplivelic.toppop.model.AlbumDetailResponse
 import com.zvonimirplivelic.toppop.model.TopChartResponse
 import com.zvonimirplivelic.toppop.util.Constants.TIME_DELAY
+import com.zvonimirplivelic.toppop.util.Resource
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import retrofit2.Response

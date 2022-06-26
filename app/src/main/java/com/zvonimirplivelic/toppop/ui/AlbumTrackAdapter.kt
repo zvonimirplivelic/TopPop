@@ -4,35 +4,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.recyclerview.widget.AsyncListDiffer
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.zvonimirplivelic.toppop.R
 import com.zvonimirplivelic.toppop.model.AlbumDetailResponse
+import com.zvonimirplivelic.toppop.util.DiffUtilExtension.autoNotify
+import kotlin.properties.Delegates
 
-class AlbumTrackAdapter: RecyclerView.Adapter<AlbumTrackAdapter.AlbumTrackItemViewHolder>() {
+class AlbumTrackAdapter : RecyclerView.Adapter<AlbumTrackAdapter.AlbumTrackItemViewHolder>() {
 
-    inner class AlbumTrackItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
-
-
-    private val diffCallback =
-        object : DiffUtil.ItemCallback<AlbumDetailResponse.Tracks.Data>() {
-            override fun areItemsTheSame(
-                oldItem: AlbumDetailResponse.Tracks.Data,
-                newItem: AlbumDetailResponse.Tracks.Data
-            ): Boolean {
-                return oldItem.id == newItem.id
+    private var albumTrackList: List<AlbumDetailResponse.Tracks.Data>
+            by Delegates.observable(emptyList()) { _, oldList, newList ->
+                autoNotify(oldList, newList) { o, n -> o.id == n.id }
             }
 
-            override fun areContentsTheSame(
-                oldItem: AlbumDetailResponse.Tracks.Data,
-                newItem: AlbumDetailResponse.Tracks.Data
-            ): Boolean {
-                return oldItem == newItem
-            }
-        }
-
-    val differ = AsyncListDiffer(this, diffCallback)
+    inner class AlbumTrackItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumTrackItemViewHolder {
         return AlbumTrackItemViewHolder(
@@ -45,7 +30,7 @@ class AlbumTrackAdapter: RecyclerView.Adapter<AlbumTrackAdapter.AlbumTrackItemVi
     }
 
     override fun onBindViewHolder(holder: AlbumTrackItemViewHolder, position: Int) {
-        val currentTrack = differ.currentList[position]
+        val currentTrack = albumTrackList[position]
 
         holder.itemView.apply {
             val trackPosition: TextView = findViewById(R.id.tv_track_position)
@@ -56,5 +41,9 @@ class AlbumTrackAdapter: RecyclerView.Adapter<AlbumTrackAdapter.AlbumTrackItemVi
         }
     }
 
-    override fun getItemCount() = differ.currentList.size
+    override fun getItemCount() = albumTrackList.size
+
+    fun setData(trackList: List<AlbumDetailResponse.Tracks.Data>) {
+        this.albumTrackList = trackList
+    }
 }

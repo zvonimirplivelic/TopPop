@@ -2,17 +2,17 @@ package com.zvonimirplivelic.toppop.ui
 
 import android.os.Bundle
 import android.view.*
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.zvonimirplivelic.toppop.R
-import com.zvonimirplivelic.toppop.model.TopChartResponse
 import com.zvonimirplivelic.toppop.util.Resource
-import com.zvonimirplivelic.toppop.util.TopPopViewModel
+import com.zvonimirplivelic.toppop.TopPopViewModel
+import com.zvonimirplivelic.toppop.model.TopChartResponse
 
 class TopChartFragment : Fragment() {
 
@@ -20,6 +20,7 @@ class TopChartFragment : Fragment() {
     private lateinit var rvTopChart: RecyclerView
     private lateinit var topChartAdapter: TopChartAdapter
     private lateinit var linearLayoutManager: LinearLayoutManager
+    private var topChart: List<TopChartResponse.Tracks.Data> = emptyList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,7 +30,7 @@ class TopChartFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_top_chart, container, false)
         setHasOptionsMenu(true)
 
-        val progressBar: ProgressBar = view.findViewById(R.id.progress_bar)
+        val swipeRefreshLayout: SwipeRefreshLayout = view.findViewById(R.id.swipe_refresh)
 
         linearLayoutManager = LinearLayoutManager(activity)
         topChartAdapter = TopChartAdapter()
@@ -42,22 +43,27 @@ class TopChartFragment : Fragment() {
             layoutManager = linearLayoutManager
         }
 
+        swipeRefreshLayout.setOnRefreshListener {
+            viewModel.getTopChart()
+        }
+
         viewModel.getTopChart()
 
         viewModel.topChartData.observe(viewLifecycleOwner) { response ->
 
             when (response) {
                 is Resource.Success -> {
-                    progressBar.isVisible = false
+                    swipeRefreshLayout.isRefreshing = false
                     rvTopChart.isVisible = true
 
                     response.data?.let { topChart ->
-                        topChartAdapter.differ.submitList(topChart.tracks.data)
+                        this.topChart = topChart.tracks.data
+                        topChartAdapter.setData(topChart.tracks.data)
                     }
                 }
 
                 is Resource.Error -> {
-                    progressBar.isVisible = false
+                    swipeRefreshLayout.isRefreshing = false
                     rvTopChart.isVisible = false
                     response.message?.let { message ->
                         Toast.makeText(activity, "An error occured: $message", Toast.LENGTH_LONG)
@@ -66,7 +72,7 @@ class TopChartFragment : Fragment() {
                 }
 
                 is Resource.Loading -> {
-                    progressBar.isVisible = true
+                    swipeRefreshLayout.isRefreshing = true
                     rvTopChart.isVisible = false
                 }
             }
@@ -83,19 +89,19 @@ class TopChartFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        val topChart = topChartAdapter.differ.currentList
+        val sortTopChart = this.topChart
 
         when (item.itemId) {
             R.id.sort_normal -> {
-                topChartAdapter.differ.submitList(topChart.sortedBy { it.position })
+                topChartAdapter.setData(sortTopChart.sortedBy { it.position })
                 return true
             }
             R.id.sort_ascending -> {
-                topChartAdapter.differ.submitList(topChart.sortedBy { it.duration })
+                topChartAdapter.setData(sortTopChart.sortedBy { it.duration })
                 return true
             }
             R.id.sort_descending -> {
-                topChartAdapter.differ.submitList(topChart.sortedByDescending { it.duration })
+                topChartAdapter.setData(sortTopChart.sortedByDescending { it.duration })
                 return true
             }
         }

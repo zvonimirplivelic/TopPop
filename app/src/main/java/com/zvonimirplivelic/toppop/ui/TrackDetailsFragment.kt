@@ -16,10 +16,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.zvonimirplivelic.toppop.R
-import com.zvonimirplivelic.toppop.TopPopRepository
 import com.zvonimirplivelic.toppop.model.TopChartResponse
 import com.zvonimirplivelic.toppop.util.Resource
-import com.zvonimirplivelic.toppop.util.TopPopViewModel
+import com.zvonimirplivelic.toppop.TopPopViewModel
 import de.hdodenhof.circleimageview.CircleImageView
 
 
@@ -73,8 +72,8 @@ class TrackDetailsFragment : Fragment() {
                     progressBar.isVisible = false
                     trackDataLayout.isVisible = true
 
-                    response.data?.let { trackList ->
-                        albumTrackAdapter.differ.submitList(trackList.tracks.data)
+                    response.data?.let { albumDetails ->
+                        albumTrackAdapter.setData(albumDetails.tracks.data)
                     }
                 }
 
