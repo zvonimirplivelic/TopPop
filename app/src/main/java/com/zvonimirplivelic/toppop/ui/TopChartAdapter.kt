@@ -69,5 +69,6 @@ class TopChartAdapter : RecyclerView.Adapter<TopChartAdapter.TopChartItemViewHol
 
     fun setData(topChart: List<TopChartResponse.Tracks.Data>) {
         this.topChart = topChart
+        notifyDataSetChanged()
     }
 }
