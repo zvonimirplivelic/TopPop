@@ -3,6 +3,7 @@ package com.zvonimirplivelic.toppop.ui
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.core.view.isEmpty
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -39,6 +40,7 @@ class TopChartFragment : Fragment() {
         viewModel = ViewModelProvider(this)[TopPopViewModel::class.java]
 
         rvTopChart.apply {
+            setHasFixedSize(true)
             adapter = topChartAdapter
             layoutManager = linearLayoutManager
         }
@@ -47,7 +49,9 @@ class TopChartFragment : Fragment() {
             viewModel.getTopChart()
         }
 
-        viewModel.getTopChart()
+        if (topChart.isEmpty()) {
+            viewModel.getTopChart()
+        }
 
         viewModel.topChartData.observe(viewLifecycleOwner) { response ->
 
@@ -66,7 +70,7 @@ class TopChartFragment : Fragment() {
                     swipeRefreshLayout.isRefreshing = false
                     rvTopChart.isVisible = false
                     response.message?.let { message ->
-                        Toast.makeText(activity, "An error occured: $message", Toast.LENGTH_LONG)
+                        Toast.makeText(activity, "An error occurred: $message", Toast.LENGTH_LONG)
                             .show()
                     }
                 }

@@ -5,11 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.AsyncListDiffer
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.zvonimirplivelic.toppop.R
-import com.zvonimirplivelic.toppop.model.AlbumDetailResponse
 import com.zvonimirplivelic.toppop.model.TopChartResponse
 import com.zvonimirplivelic.toppop.util.DiffUtilExtension.autoNotify
 import kotlin.properties.Delegates

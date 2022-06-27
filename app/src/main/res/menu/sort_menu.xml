@@ -9,10 +9,10 @@
         app:showAsAction="never" />
 
     <item android:id="@+id/sort_ascending"
-        android:title="Ascending"
+        android:title="Sort Asc"
         app:showAsAction="never" />
 
     <item android:id="@+id/sort_descending"
-        android:title="Descending"
+        android:title="Sort Desc"
         app:showAsAction="never" />
 </menu>

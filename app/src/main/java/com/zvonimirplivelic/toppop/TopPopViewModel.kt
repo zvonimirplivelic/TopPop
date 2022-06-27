@@ -18,7 +18,7 @@ import timber.log.Timber
 import java.io.IOException
 
 class TopPopViewModel(
-    private val app: Application
+    app: Application
 ) : AndroidViewModel(app) {
     private val topPopRepository = TopPopRepository()
 

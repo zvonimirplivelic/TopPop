@@ -54,7 +54,7 @@ data class TopChartResponse(
             @SerializedName("title")
             val title: String,
             @SerializedName("tracklist")
-            val tracklist: String,
+            val trackList: String,
             @SerializedName("type")
             val type: String
         ) : Parcelable {
@@ -79,7 +79,7 @@ data class TopChartResponse(
                 @SerializedName("radio")
                 val radio: Boolean,
                 @SerializedName("tracklist")
-                val tracklist: String,
+                val trackList: String,
                 @SerializedName("type")
                 val type: String
             ) : Parcelable
@@ -116,7 +116,7 @@ data class TopChartResponse(
             @SerializedName("radio")
             val radio: Boolean,
             @SerializedName("tracklist")
-            val tracklist: String,
+            val trackList: String,
             @SerializedName("type")
             val type: String
         ) : Parcelable
@@ -160,7 +160,7 @@ data class TopChartResponse(
             @SerializedName("title")
             val title: String,
             @SerializedName("tracklist")
-            val tracklist: String,
+            val trackList: String,
             @SerializedName("type")
             val type: String,
             @SerializedName("user")
@@ -173,7 +173,7 @@ data class TopChartResponse(
                 @SerializedName("name")
                 val name: String,
                 @SerializedName("tracklist")
-                val tracklist: String,
+                val trackList: String,
                 @SerializedName("type")
                 val type: String
             ) : Parcelable
@@ -281,7 +281,7 @@ data class TopChartResponse(
                 @SerializedName("title")
                 val title: String,
                 @SerializedName("tracklist")
-                val tracklist: String,
+                val trackList: String,
                 @SerializedName("type")
                 val type: String
             ) : Parcelable
@@ -307,7 +307,7 @@ data class TopChartResponse(
                 @SerializedName("radio")
                 val radio: Boolean,
                 @SerializedName("tracklist")
-                val tracklist: String,
+                val trackList: String,
                 @SerializedName("type")
                 val type: String
             ) : Parcelable

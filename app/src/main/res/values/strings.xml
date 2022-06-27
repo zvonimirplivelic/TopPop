@@ -2,4 +2,8 @@
     <string name="app_name">TopPop</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="detail_track_title">Track title: %s</string>
+    <string name="detail_artist_name">Artist name: %s</string>
+    <string name="detail_album_name">Album name: %s</string>
+    <string name="detail_track_list">Album track list</string>
 </resources>

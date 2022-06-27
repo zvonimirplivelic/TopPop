@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,7 +6,8 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="16dp"
     android:layout_marginVertical="8dp"
-    app:cardBackgroundColor="#DDD"
+    android:elevation="4dp"
+    app:cardBackgroundColor="@color/teal_100"
     app:cardCornerRadius="16dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,13 +30,13 @@
             android:id="@+id/tv_track_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:gravity="center"
-            android:ellipsize="end"
-            android:maxLength="50"
             android:layout_marginHorizontal="16dp"
-            android:maxLines="1"
+            android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLength="50"
+            android:maxLines="1"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/tv_artist_name"
             app:layout_constraintLeft_toRightOf="@id/tv_track_position"

@@ -1,7 +1,6 @@
 package com.zvonimirplivelic.toppop.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,15 +9,16 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.zvonimirplivelic.toppop.R
+import com.zvonimirplivelic.toppop.TopPopViewModel
 import com.zvonimirplivelic.toppop.model.TopChartResponse
 import com.zvonimirplivelic.toppop.util.Resource
-import com.zvonimirplivelic.toppop.TopPopViewModel
 import de.hdodenhof.circleimageview.CircleImageView
 
 
@@ -38,7 +38,7 @@ class TrackDetailsFragment : Fragment() {
         val progressBar: ProgressBar = view.findViewById(R.id.progress_bar)
         val trackDataLayout: ConstraintLayout = view.findViewById(R.id.cl_track_data)
 
-        val civAlbumImage: CircleImageView = view.findViewById(R.id.civ_album_picture)
+        val civAlbumCover: CircleImageView = view.findViewById(R.id.iv_album_cover)
         val tvTrackTitle: TextView = view.findViewById(R.id.tv_title_track)
         val tvArtistName: TextView = view.findViewById(R.id.tv_artist_name)
         val tvAlbumName: TextView = view.findViewById(R.id.tv_album_name)
@@ -59,11 +59,20 @@ class TrackDetailsFragment : Fragment() {
             .load(currentTrackDetails.album.coverXl)
             .fit()
             .noFade()
-            .into(civAlbumImage)
+            .into(civAlbumCover)
 
-        tvTrackTitle.text = currentTrackDetails.title
-        tvArtistName.text = currentTrackDetails.artist.name
-        tvAlbumName.text = currentTrackDetails.album.title
+        tvTrackTitle.text = resources.getString(
+            R.string.detail_track_title,
+            currentTrackDetails.title
+        )
+        tvArtistName.text = resources.getString(
+            R.string.detail_album_name,
+            currentTrackDetails.artist.name
+        )
+        tvAlbumName.text = resources.getString(
+            R.string.detail_album_name,
+            currentTrackDetails.album.title
+        )
 
         viewModel.albumTracksData.observe(viewLifecycleOwner) { response ->
 
@@ -81,7 +90,7 @@ class TrackDetailsFragment : Fragment() {
                     progressBar.isVisible = false
                     trackDataLayout.isVisible = false
                     response.message?.let { message ->
-                        Toast.makeText(activity, "An error occured: $message", Toast.LENGTH_LONG)
+                        Toast.makeText(activity, "An error occurred: $message", Toast.LENGTH_LONG)
                             .show()
                     }
                 }

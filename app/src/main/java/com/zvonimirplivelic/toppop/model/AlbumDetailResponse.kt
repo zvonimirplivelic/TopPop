@@ -56,7 +56,7 @@ data class AlbumDetailResponse(
     @SerializedName("title")
     val title: String,
     @SerializedName("tracklist")
-    val tracklist: String,
+    val trackList: String,
     @SerializedName("tracks")
     val tracks: Tracks,
     @SerializedName("type")
@@ -82,7 +82,7 @@ data class AlbumDetailResponse(
         @SerializedName("picture_xl")
         val pictureXl: String,
         @SerializedName("tracklist")
-        val tracklist: String,
+        val trackList: String,
         @SerializedName("type")
         val type: String
     ) : Parcelable
@@ -112,7 +112,7 @@ data class AlbumDetailResponse(
         @SerializedName("share")
         val share: String,
         @SerializedName("tracklist")
-        val tracklist: String,
+        val trackList: String,
         @SerializedName("type")
         val type: String
     ) : Parcelable
@@ -184,7 +184,7 @@ data class AlbumDetailResponse(
                 @SerializedName("title")
                 val title: String,
                 @SerializedName("tracklist")
-                val tracklist: String,
+                val trackList: String,
                 @SerializedName("type")
                 val type: String
             ) : Parcelable
@@ -196,7 +196,7 @@ data class AlbumDetailResponse(
                 @SerializedName("name")
                 val name: String,
                 @SerializedName("tracklist")
-                val tracklist: String,
+                val trackList: String,
                 @SerializedName("type")
                 val type: String
             ) : Parcelable
