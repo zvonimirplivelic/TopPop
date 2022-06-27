@@ -97,15 +97,18 @@ class TopChartFragment : Fragment() {
 
         when (item.itemId) {
             R.id.sort_normal -> {
-                topChartAdapter.setData(sortTopChart.sortedBy { it.position })
+                val sortChart = sortTopChart.sortedBy { it.position }
+                topChartAdapter.setData(sortChart)
                 return true
             }
             R.id.sort_ascending -> {
-                topChartAdapter.setData(sortTopChart.sortedBy { it.duration })
+                val sortChart = sortTopChart.sortedBy { it.duration }
+                topChartAdapter.setData(sortChart)
                 return true
             }
             R.id.sort_descending -> {
-                topChartAdapter.setData(sortTopChart.sortedByDescending { it.duration })
+                val sortChart = sortTopChart.sortedByDescending { it.duration }
+                topChartAdapter.setData(sortChart)
                 return true
             }
         }
